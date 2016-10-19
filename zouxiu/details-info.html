@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>走秀网</title>
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/zepto.js"></script>
+	<script type="text/javascript" src="js/zepto-touch.js"></script>
+</head>
+<body>
+	<div class="box">
+		<header class="det-header">
+            <a href="javascript:history.back(-1);"><i class="icon iconfont">&#xe602;</i></a>
+			<h3>商品资料</h3>
+            <i class="icon iconfont">&#xe605;</i>
+            <i class="icon iconfont">&#xe60d;</i>
+		</header>
+		
+		<section class="det-info-main">
+			<div class="bigImg">
+				<img src="images/item_pic1.jpg" alt="">
+			</div>
+			<div class="goods-info">
+				<ul>
+					<li>品牌名称：</li>
+					<li>商品名称：</li>
+					<li>材质：</li>
+					<li>产地：</li>
+					<li>商品编号：</li>
+					<li>洗涤说明：</li>
+					<li>所属分类：</li>
+					<li>备注：</li>
+					<li>其他：</li>
+				</ul>
+			</div>
+		</section>
+		
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(function(){
+		//获取地址栏参数
+		function getUrlParam(name){
+			var reg = new RegExp("(^|&)" + name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r!=null) return unescape(r[2]); return null;
+		}
+		var obj = {
+			goodsID:getUrlParam('goods-id')
+		};
+		$.ajax({
+			url:'http://datainfo.duapp.com/shopdata/getGoods.php',
+			type:'get',
+			dataType:'jsonp',
+			data:obj,
+			success: function(data){
+				$(data).each(function(i){
+					var $goods = '';
+					var imgDetails = '';
+					var goodsInfo = '';
+
+					//banner图片
+					var imgList = JSON.parse(data[i].imgsUrl);
+					$(imgList).each(function(j){
+						imgDetails = '<li><img src="'+imgList[j]+'" alt=""></li>';
+						$('.banner ul').append(imgDetails);
+					});
+
+					//商品信息
+					//现价：折扣*原价
+					if(data[i].discount == 0){
+						data[i].discount = 10;
+					}
+					nowPrice = parseInt((data[i].discount/10) * data[i].price);
+
+					goodsInfo = '<ul>'+
+									'<li>'+data[i].goodsName+'</li>'+
+									'<li><b>￥'+nowPrice+'</b>	<s>￥'+data[i].price+'</s></li>'+
+									'<li>尺码：160/84 160/88A</li>'+
+									'<li>数量：'+data[i].buynumber+'</li>'+
+								'</ul>';
+
+
+					console.log(data[i]);
+					$('.info').append(goodsInfo);
+				})
+					
+			}
+		})
+
+		var iNow = 1;
+		$('.banner').swipeRight(function(){
+			console.log(iNow);
+			$(this).find('ul').animate({'left':'-'+iNow*20+'%'});
+			iNow--;
+			if (iNow <=0 ) {
+				iNow = 0;
+			}
+			$(this).find('ol').find('li').removeClass('active').eq(iNow).addClass('active');
+		});
+		$('.banner').swipeLeft(function(){
+			$(this).find('ul').animate({'left':'-'+iNow*20+'%'});
+			iNow++;
+			if(iNow >= 3){
+				iNow = 2;
+			}
+			$(this).find('ol').find('li').removeClass('active').eq(iNow).addClass('active');
+			console.log(iNow)
+		});
+	})
+</script>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>jq-mobile</title>
+	<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css">
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.cont img{
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div data-role="page" id="pageone">
+	  <div data-role="panel" id="myPanel" data-display="overlay"> 
+	    <h2>面板头部..</h2>
+	    <p>点击面板外部区域或按下 Esc 键或滑动来关闭面板。..</p>
+	     <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left">关闭面板</a>
+	  </div> 
+
+	  <div data-role="header">
+	    <h1>标准页面头部</h1>
+	  </div>
+
+	  <div data-role="main" class="ui-content">
+	    <p>点击下面按钮打开面板。</p>
+	    <a href="#myPanel" class="ui-btn ui-btn-inline">打开面板</a>
+	  </div>
+
+	  <div data-role="footer">
+	    <h1>底部文本</h1>
+	  </div> 
+	</div>
+</body>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+
+<script type="text/javascript">
+	
+</script>
+</html>

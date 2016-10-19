@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>走秀网</title>
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/zepto.js"></script>
+	<script type="text/javascript" src="js/zepto-touch.js"></script>
+</head>
+<body>
+	<div class="box">
+		<header>
+			<h3>新品上市</h3>
+            <i class="icon iconfont index-cart">&#xe6c9;</i>
+		</header>
+		<nav>
+			<ul>
+				<li class="active"><i class="icon iconfont">&#xe60e;</i></li>
+				<li><i class="icon iconfont">&#xe686;</i></li>
+				<li><i class="icon iconfont">&#xe66b;</i></li>
+				<li><i class="icon iconfont">&#xe60b;</i></li>
+				<li><i class="icon iconfont">&#xe632;</i></li>
+				<li><i class="icon iconfont">&#xe674;</i></li>
+				<li><i class="icon iconfont">&#xe606;</i></li>
+				<li><i class="icon iconfont">&#xe629;</i></li>
+				<li><i class="icon iconfont">&#xe6c3;</i></li>
+				<li><i class="icon iconfont">&#xe686;</i></li>
+				<li><i class="icon iconfont">&#xe629;</i></li>
+				<li><i class="icon iconfont">&#xe6c3;</i></li>
+				<li><i class="icon iconfont">&#xe686;</i></li>
+			</ul>
+		</nav>
+		<section>
+			<div class="list">
+				<!-- <ul>
+					<li>
+						<img src="images/new.png" alt="" class="new">
+						<img src="images/包包 (1).png" alt="">
+					</li>
+					<li>
+						T恤白色
+					</li>
+					<li>
+						<b>￥49.00</b>
+						<span>数量：</span>
+					</li>
+				</ul> -->
+				
+			</div>
+		</section>
+		<footer>
+			<ul>				
+				<li class="active">
+					<i class="icon iconfont">&#xe600;</i>
+					<p>首页</p>
+				</li>
+				<li>
+					<i class="icon iconfont">&#x3553;</i>
+					<p>分类</p>
+				</li>
+				<li>
+					<i class="icon iconfont">&#xe6c9;</i>
+					<p>购物车</p>
+				</li>
+				<li>
+					<i class="icon iconfont">&#xe618;</i>
+					<p>我的秀</p>
+				</li>
+				<li>
+					<i class="icon iconfont">&#xe622;</i>
+					<p>更多</p>
+				</li>
+			</ul>
+		</footer>
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url:'http://datainfo.duapp.com/shopdata/getclass.php',
+			type:'get',
+			dataType:'json',
+			success: function(data){
+				$(data).each(function(i){
+					$('nav ul li').eq(i).attr({'data-id':data[i].classID});
+				})				
+			}
+		});
+
+
+
+		oAjax();
+		var obj = {
+			'classID':1
+		};
+
+		//选项卡切换
+		$('nav ul li').tap(function(){
+			var index = $(this).attr('data-id');
+			obj.classID = index;
+			$('.list').empty();
+			$('nav ul li').removeClass('active').eq(index - 1).addClass('active');
+			oAjax();
+		})
+
+		function oAjax(){
+			//商品列表
+			$.ajax({
+				url:'http://datainfo.duapp.com/shopdata/getGoods.php',
+				type:'get',
+				data: obj,
+				dataType:'jsonp',
+				success: function(data){
+					console.log(data);
+					var $goods = '';
+					$(data).each(function(i){
+
+						//现价：折扣*原价
+						if(data[i].discount == 0){
+							data[i].discount = 10;
+						}
+						nowPrice = parseInt((data[i].discount/10) * data[i].price);
+
+						$goods = $('<ul>'+
+							'<a href="details.html?goods-id='+data[i].goodsID+'"><li>'+
+								'<img src="images/new.png" alt="" class="new">'+
+								'<img src="'+data[i].goodsListImg+'" alt="">'+
+							'</li>'+
+							'<li>'+data[i].goodsName+'</li></a>'+
+							'<li>'+
+								'<b>￥'+nowPrice+'</b>'+
+								'<s>￥：'+data[i].price+'</s>'+
+							'</li>'+
+						'</ul>');
+						$('.list').append($goods);
+					})
+				}
+			});
+		}
+		
+		//选项卡滑动
+		var iDis = 0;
+		$('nav').swipeRight(function(){
+			console.log(iDis)
+			iDis--;
+			if (iDis <= 0) {
+				iDis = 0;
+			}
+			$(this).find('ul').css({'margin-left':'-' + iDis * 10 + '%'})
+			
+		})
+		$('nav').swipeLeft(function(){
+			console.log(iDis)
+			iDis++;
+			if (iDis >= 3) {
+				iDis = 3;
+			}
+			$(this).find('ul').css({'margin-left':'-' + iDis * 10 + '%'})
+			
+		})
+
+
+
+	})
+</script>
+</html>

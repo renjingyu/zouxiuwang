@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>jq-mobile</title>
+	<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css">
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.cont img{
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div data-role="page">
+
+	  <div data-role="header">
+	    <h1>欢迎来到我的主页</h1>
+	  </div>
+
+	  <div data-role="main" class="ui-content">
+	    <a href="#myPopup" data-rel="popup" data-position-to="window" class="ui-btn ui-btn-inline ui-corner-all">显示弹窗</a>
+
+		<div data-role="popup" id="myPopup" class="ui-content">
+	      <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">关闭</a>
+	      <p>我在左上角有个关闭按钮</p>
+	      <p><b>提示:</b> 你也可以通过点击弹窗外的区域来关闭弹窗。</p>
+	    </div>
+	  </div>
+
+	  <div data-role="footer">
+	    <h1>底部文本</h1>
+	  </div>
+
+	</div>
+</body>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+
+<script type="text/javascript">
+	
+</script>
+</html>
