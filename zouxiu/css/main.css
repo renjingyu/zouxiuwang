@@ -72,6 +72,7 @@ section{
 	background: #f3f4f6;
 	overflow: scroll;
 	padding: 0.4rem;
+	box-sizing: border-box;
 }
 section .list{
 	overflow: hidden;
@@ -317,4 +318,24 @@ footer.det-footer a{
 }
 footer.det-footer span{
 	margin: auto;
+}
+
+/*************************详情页*************************/
+section.det-info-main{
+	background: #fff;
+	height: 90%;
+	overflow: scroll;
+	padding-top: 0;
+}
+section.det-info-main .goods-img{
+	background: red;
+	height: 55%;
+}
+section.det-info-main .goods-img img{
+	width: 100%;
+	height: 100%;
+}
+section.det-info-main .goods-info{
+	background: green;
+	height: 45%;
 }
